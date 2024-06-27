@@ -1,2 +1,5 @@
-dataset/
+dataset
 face_data.xml
+__pycache__
+*.ui
+cameras_ui_new.py
