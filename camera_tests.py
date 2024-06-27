@@ -46,6 +46,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.display_frame(frames[3], self.camera_3)
 
     def display_frame(self, frame, label):
+        # Resize the image to 1/4th of the original size
+        frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+
         # Convert the frame to grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -57,7 +60,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             roi_gray = gray[y:y+h, x:x+w]  # Region of Interest (face area)
             id_, conf = face_recognizer.predict(roi_gray)  # Recognize the face
 
-            if conf >= 30:  # Confidence threshold (adjust as needed)
+            if conf >= 50:  # Confidence threshold (adjust as needed)
                 name = names[id_]  # Get the name from the list
                 cv2.putText(frame, name, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
 
